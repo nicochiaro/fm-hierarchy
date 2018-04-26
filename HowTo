@@ -1,0 +1,8 @@
+To set up the hierarchy environment you will need 2 fields:
+
+id
+id_parent
+
+The second one will be hardcoded in the custom-functions used, so that you shall name it exactly like it's named in queryParent().
+
+Hardcoding it one single time will prevent you from giving a second parameter for every function.
