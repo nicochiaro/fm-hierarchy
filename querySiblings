@@ -1,0 +1,22 @@
+querySiblings(ID; IDField; parentField; rootField; lvlField):
+
+If (
+	IsEmpty(ID);
+	"";
+	Let(
+		[	~level= 	queryLevel(ID;IDField;parentField;0);
+			~root=		queryRoot(ID;IDField;parentField);
+			~siblings= 	ExecuteSQL( 
+							       "SELECT " & sqlEscape(IDField;2) & " 
+							        FROM " & sqlEscape(IDField;1) & " 
+						        	WHERE " & sqlEscape(rootField;2) & "=? 
+						        	AND " & sqlEscape(lvlField;2) & " =?";
+					    	    	"";
+					    	    	""; 
+							        ~root; 
+							        ~level
+                  )
+		];
+			~siblings
+)
+)
