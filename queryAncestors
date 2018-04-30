@@ -1,0 +1,31 @@
+queryAncestors(ID; IDField; parentField);
+
+If(
+  IsEmpty(ID);
+  "";
+  Let(
+	    [ 	
+	    ~parent=		  queryParent(ID;IDField;parentField);
+    	$$ancestors=	Falls(
+					              IstLeer(~parent); $$ancestors;
+					              ~parent & "¶" & $$ancestors
+				            )
+	    ];
+
+	    If(
+		    IsEmpty(~parent);
+		      Let(
+			        [
+			        ~ancestors=$$ancestors; 
+			        $$ancestors = ""
+			        ];
+			        ~ancestors
+		      );
+		      queryAncestors(
+              ~parent; 
+              IDField;
+              parentField
+          )
+	     )		
+    )
+)
