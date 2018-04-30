@@ -1,0 +1,20 @@
+queryChildren(ID;parentField):
+
+If (
+	IsEmpty(ID);
+	"";
+	Let(
+		[	
+			~children= 	
+          ExecuteSQL( 
+							"SELECT " & sqlEscape(ID;2) & 
+							" FROM " & sqlEscape(ID;1) &
+							" WHERE " & sqlEscape(parentField;2) & "=?";
+							"";
+							""; 
+							ID
+						)
+		];
+			~children
+	)
+)
