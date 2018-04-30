@@ -1,0 +1,10 @@
+queryRoot(ID;IDField;parentField):
+
+If (
+	IsEmpty(ID);
+	"";
+	Let(
+		[ ~parent= queryParent(ID; IDField; parentField)];
+		If( ~parent=""; ID ; queryRoot(~parent;IDField; parentField) )
+	)
+)
