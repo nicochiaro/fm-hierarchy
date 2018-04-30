@@ -1,0 +1,12 @@
+queryParent(ID;IDField;parentField):
+
+Let(
+	[
+	~ID=		SQL.Escape( IDField;2 ); 
+	~table=	SQL.Escape( IDField;1 ); 
+	~parent=	SQL.Escape( parentField;2 );
+	~query= 	"SELECT " & ~parent & " FROM " & ~table & " WHERE "& ~ID &"=?"
+	];
+
+	ExecuteSQL( ~query ; "" ; "" ; ID )
+)
