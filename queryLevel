@@ -1,0 +1,17 @@
+queryLevel(ID; IDField; parentField; i);
+
+
+If (
+  IsEmpty(ID);
+  "";
+  Let(
+	  [ oneLevelUp= queryParent(ID; IDField; parentField)];
+	  If( 
+		  IsEmpty(oneLevelUp);i; 
+	  	Let(
+		  	[ i=i+1];
+		  	queryLevel( oneLevelUp; IDField; parentField; i)
+		  )
+    )
+  )
+)
