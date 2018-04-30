@@ -1,0 +1,12 @@
+sqlEscape(field;param):
+
+//parses fieldname or tablename
+//1 = tablename
+//2 = fieldname
+
+Let ( [ 
+a = GetFieldName ( field ) ; 
+b = Substitute ( a ; "::" ; ¶ ) 
+] ; 
+Quote ( GetValue ( b ; param ) )
+)
