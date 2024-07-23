@@ -1,1 +1,24 @@
-buggy - coming soon
+querySubtree(ID;IDField;parentField):
+
+
+If(IsEmpty(ID);"";
+Let(
+	[	
+		childrenList=  		queryChildren(ID;IDField;parentField); 
+							
+		childrenFiltered= 	AntiFilterValues(
+							childrenList; 
+							$$ROUTE
+						);
+		contextID=		GetValue($$ROUTE;ValueCount($$ROUTE));
+		$$ROUTE = 		ID & If(not IsEmpty($$ROUTE);¶&$$ROUTE)	];
+
+	Case(
+		ValueCount($$ROUTE)=1 and IsEmpty(childrenList);Let ([$$LEAVES="";route=$$ROUTE; $$ROUTE=""];route) ;  //EXIT
+		IsEmpty(childrenList); querySubTree_v2(queryParent(ID;IDField;parentField);IDField;parentField);
+		contextID = ID and IsEmpty(childrenFiltered); UniqueValues($$ROUTE) & Let ([$$LEAVES=""; $$ROUTE=""];"") ;  //EXIT IF CONTEXT 
+		IsEmpty(childrenFiltered); querySubTree_v2(queryParent(ID;IDField;parentField);IDField;parentField);
+		not IsEmpty(childrenFiltered); querySubTree_v2(GetValue(childrenFiltered;1);IDField;parentField)
+	)
+)
+)
