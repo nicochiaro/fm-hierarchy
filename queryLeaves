@@ -1,1 +1,68 @@
-buggy - coming soon
+queryLeaves(ID,IDField;parentField):
+
+If( 
+	IsEmpty(ID); 
+	"";
+	Let(
+		[	
+		~parent=			      queryParent ( ID ; IDField ; parentField );
+		~childrenList=  	  queryChildren( ID; IDField; parentField ); 					
+		~childrenFiltered= 	RemoveValues(~childrenList; $$ROUTEX);
+		~contextID=			    GetValue($$ROUTEX;ValueCount($$ROUTEX));
+		$$ROUTEX = 			    ID & If(not IsEmpty($$ROUTEX);¶&$$ROUTEX)	
+		];
+
+
+
+	Case(	
+		////////////////////////////////////////////////////////////////////
+
+		ValueCount($$ROUTEX)=1 and IsEmpty(~childrenList);
+			Let (
+					[$$LEAVESX=""; 
+					$$ROUTEX=""];
+					ID
+			) ;  //EXIT NO CHILDREN
+
+		////////////////////////////////////////////////////////////////////
+
+		IsEmpty(~childrenList); 
+		Let(
+				[$$LEAVESX=ID & If(not IsEmpty($$LEAVESX);¶&$$LEAVESX) ];
+				queryLeaves(
+					~parent;
+					IDField;
+					parentField)
+				); //ONE LEVEL UP
+
+		////////////////////////////////////////////////////////////////////
+
+		~contextID = ID and IsEmpty(~childrenFiltered); 
+		$$LEAVESX & 
+		Let (
+				[$$LEAVESX=""; $$ROUTEX=""];
+				""
+		);  //EXIT IF CONTEXT 
+
+		////////////////////////////////////////////////////////////////////
+
+		IsEmpty(~childrenFiltered); 
+		queryLeaves(
+			~parent;
+			IDField;
+			parentField
+		); //ONE LEVEL UP
+
+		////////////////////////////////////////////////////////////////////
+
+		not IsEmpty(~childrenFiltered); 
+			queryLeaves(
+				GetValue(~childrenFiltered;1);
+				IDField;
+				parentField 
+			)//NEXT NODE IN ROW
+		
+		////////////////////////////////////////////////////////////////////
+	)
+)
+)
