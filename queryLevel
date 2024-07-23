@@ -1,17 +1,18 @@
-queryLevel(ID; IDField; parentField; i);
+queryLevel(ID; IDField; parentField; i):
+//if you use an index_sort field in the style of "0001.0002.0001" I highly recommend to replace queryLevel() with: Length (Substitute ( index_sort; "."; "" ))/4-1) +1
 
+If (IsEmpty(ID);"";
+Let(
 
-If (
-  IsEmpty(ID);
-  "";
-  Let(
-	  [ oneLevelUp= queryParent(ID; IDField; parentField)];
-	  If( 
-		  IsEmpty(oneLevelUp);i; 
-	  	Let(
-		  	[ i=i+1];
-		  	queryLevel( oneLevelUp; IDField; parentField; i)
-		  )
-    )
-  )
+	[ oneLevelUp= queryParent(ID;IDField;parentField)];
+
+	If( 
+		IsEmpty(oneLevelUp);i; 
+		Let(
+			[ i=i+1];
+			queryLevel(oneLevelUp;IDField;parentField;i)
+			)
+
+))
 )
+
