@@ -7,7 +7,7 @@ If(
 	Let(
 
 		[ 	
-		~parent= queryParent(ID;IDField;parentField);
+		~parent= parentField;
   		$$ancestors=	
 			Case(
 				IsEmpty(~parent); $$ancestors;
