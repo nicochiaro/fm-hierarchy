@@ -5,11 +5,11 @@ If(
 	"";
 	Let(
 		[	
-		~parent=			      queryParent ( ID ; IDField ; parentField );
-		~childrenList=  	  queryChildren( ID; IDField; parentField ); 					
+		~parent=		parentField;
+		~childrenList=		queryChildren( ID; IDField; parentField ); 					
 		~childrenFiltered= 	RemoveValues(~childrenList; $$ROUTEX);
-		~contextID=			    GetValue($$ROUTEX;ValueCount($$ROUTEX));
-		$$ROUTEX = 			    ID & If(not IsEmpty($$ROUTEX);¶&$$ROUTEX)	
+		~contextID=		GetValue($$ROUTEX;ValueCount($$ROUTEX));
+		$$ROUTEX =		ID & If(not IsEmpty($$ROUTEX);¶&$$ROUTEX)	
 		];
 
 
